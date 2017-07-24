@@ -22,6 +22,10 @@ public class Directory {
 		List<String> cities = new ArrayList<String>();
 		List<String> states = new ArrayList<String>();
 		
+		names.add("ClubName");
+		cities.add("ClubCity");
+		states.add("ClubStateCode");
+		
 		Elements nameCol = table.getCol(1);
 		Elements locationCol = table.getCol(2);
 		

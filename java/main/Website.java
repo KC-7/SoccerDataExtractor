@@ -13,7 +13,7 @@ public class Website {
 		userAgent.visit("http://afcl.ussoccerda.com/club-staff");
 		Hyperlink link = userAgent.doc.getHyperlink("Official Club Website");
 		
-		return link.getHref();
+		return "ClubWebsiteURL" + System.lineSeparator() + link.getHref();
 
 		
 	}

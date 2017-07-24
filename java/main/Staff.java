@@ -11,8 +11,7 @@ import com.jaunt.UserAgent;
 public class Staff {
 
 	public static String staff() throws JauntException {
-		
-		
+				
 		UserAgent userAgent = new UserAgent();
 		userAgent.visit("http://afcl.ussoccerda.com/club-staff");
 		Element div = userAgent.doc.findFirst("<div class=BoardTrinket>");
@@ -21,7 +20,17 @@ public class Staff {
 		List<String> lastNames = new ArrayList<String>();
 		List<String> roles = new ArrayList<String>();
 		List<String> emailAddresses = new ArrayList<String>();
-		List<String> phoneNumbers = new ArrayList<String>();
+		List<String> cellPhoneNumbers = new ArrayList<String>();
+		List<String> homePhoneNumbers = new ArrayList<String>();
+		List<String> workPhoneNumbers = new ArrayList<String>();
+		
+		firstNames.add("StaffFirstName");
+		lastNames.add("StaffLastName");
+		roles.add("StaffRole");
+		emailAddresses.add("StaffEmailAddress");
+		cellPhoneNumbers.add("StaffCellPhoneNumber");
+		homePhoneNumbers.add("StaffHomePhoneNumber");
+		workPhoneNumbers.add("StaffWorkPhoneNumber");
 		
 		Elements spans = div.findEach("<span class>");
 		for (Element span : spans) {
@@ -39,13 +48,24 @@ public class Staff {
 				emailAddresses.add(text);
 				break;
 			case "bm-phone":
-				if (phoneNumbers.size() == firstNames.size() - 1) {
-					phoneNumbers.add(text);
-				} else {
-					int lastIndex = phoneNumbers.size() - 1;
-					if (!phoneNumbers.get(lastIndex).contains("cell")) {
-						phoneNumbers.set(lastIndex, text);
-					}
+				String cleanNumber = text.replaceAll("\\D", "");		
+				String type = text.replaceAll("[^A-z]", "");
+				switch (type) {
+				case "cell":
+					cellPhoneNumbers.add(cleanNumber);
+					homePhoneNumbers.add("");
+					workPhoneNumbers.add("");
+					break;
+				case "home":
+					homePhoneNumbers.add(cleanNumber);
+					cellPhoneNumbers.add("");
+					workPhoneNumbers.add("");
+					break;
+				case "work":
+					workPhoneNumbers.add(cleanNumber);
+					homePhoneNumbers.add("");
+					cellPhoneNumbers.add("");
+					break;
 				}
 				break;
 			}
@@ -56,7 +76,9 @@ public class Staff {
 		dataColumns.add(lastNames);
 		dataColumns.add(roles);
 		dataColumns.add(emailAddresses);
-		dataColumns.add(phoneNumbers);
+		dataColumns.add(cellPhoneNumbers);
+		dataColumns.add(homePhoneNumbers);
+		dataColumns.add(workPhoneNumbers);
 		return CSV.getCSV(dataColumns);
 		
 		

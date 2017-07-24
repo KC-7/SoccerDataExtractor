@@ -24,6 +24,11 @@ public class Team {
 		List<String> roles = new ArrayList<String>();
 		List<String> emailAddresses = new ArrayList<String>();
 		
+		firstNames.add("StaffFirstName");
+		lastNames.add("StaffLastName");
+		roles.add("StaffRole");
+		emailAddresses.add("StaffEmailAddress");
+		
 		Elements col = table.getCol(1);
 		
 		for (int i = 2; i < col.size(); i++) {
