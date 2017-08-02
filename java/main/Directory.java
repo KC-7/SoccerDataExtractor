@@ -34,7 +34,11 @@ public class Directory {
 			Map<String, String> stateMap = getStateMap();
 			names.add(nameCol.getElement(i).innerText().trim());
 			cities.add(locationData[0]);
-			states.add(stateMap.get(locationData[1]));
+			try {
+				states.add(stateMap.get(locationData[1]));
+			} catch (Exception e) {
+				states.add("");
+			}
 		}
 		
 		List<List<String>> dataColumns = new ArrayList<List<String>>();
